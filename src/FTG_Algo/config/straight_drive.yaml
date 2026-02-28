@@ -1,0 +1,16 @@
+straight_driver:
+  ros__parameters:
+    cmd_topic: /autonomous/ackermann_cmd
+    publish_rate_hz: 20.0
+
+    arm_time_sec: 2.0
+    start_delay_sec: 0.0
+
+    drive_time_sec: 2.0
+    stop_time_sec: 5.0
+
+    speed: 0.30
+    steering_angle: 0.0
+
+    repeat: false
+    exit_on_finish: false
