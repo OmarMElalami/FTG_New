@@ -1,3 +1,4 @@
+import os
 from setuptools import setup
 
 package_name = 'obstacle_substitution'
@@ -16,7 +17,7 @@ setup(
             ['package.xml']
         ),
         (
-            'share/' + package_name,
+            os.path.join('share', package_name, 'launch'),
             ['launch/start.launch.py']
         ),
     ],

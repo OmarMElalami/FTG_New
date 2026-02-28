@@ -13,6 +13,7 @@ from typing import List, Tuple, Any
 
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 
 # Computation engine
 import math
@@ -103,6 +104,13 @@ class ObstacleSubstitutionNode(Node):
     def __init__(self):
         super().__init__(node_name='obstacle_substitution')
 
+        # QoS profile for sensor data (BestEffort matches real LiDAR hardware)
+        sensor_qos = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10,
+        )
+
         # publishers
         self.pub = self.create_publisher(msg_type=ObstaclesStamped, topic='/obstacles', qos_profile=1)
 
@@ -111,7 +119,7 @@ class ObstacleSubstitutionNode(Node):
             msg_type=LaserScan,
             topic='/scan',
             callback=self.callback_scan,
-            qos_profile=1,
+            qos_profile=sensor_qos,
         )
 
         # measurers
