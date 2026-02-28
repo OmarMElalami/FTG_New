@@ -15,7 +15,7 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob('launch/*_launch.py')),
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml'))
     ],
-    install_requires=['setuptools', 'paramiko'],
+    install_requires=['setuptools'],
     zip_safe=True,
     maintainer='root',
     maintainer_email='root@todo.todo',
