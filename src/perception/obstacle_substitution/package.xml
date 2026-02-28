@@ -4,13 +4,8 @@
 
 	<name>obstacle_substitution</name>
 	<version>0.1.3</version>
-	<description>
-		This package is used as an example for recognition layer. It simply converts
-		all LiDAR measurements into circle obstacles. Since 0.1.1 it throws away all
-		measurements that are too close (closer than range_min) or too far away
-		(further than range_max) instead of keeping them.
-	</description>
-	<maintainer email="klapajar@fel.cvut.cz">Jaroslav Klapálek</maintainer>
+	<description>Converts LiDAR scan data to circle obstacles for the Follow-The-Gap planner</description>
+	<maintainer email="omar@todo.todo">Omar Elalami</maintainer>
 	<license>Apache License 2.0</license>
 	<author email="klapajar@fel.cvut.cz">Jaroslav Klapálek</author>
 
@@ -20,9 +15,6 @@
 	<exec_depend>std_msgs</exec_depend>
 	<exec_depend>geometry_msgs</exec_depend>
 	<exec_depend>sensor_msgs</exec_depend>
-
-	<exec_depend>launch</exec_depend>
-	<exec_depend>launch_ros</exec_depend>
 
 	<test_depend>ament_copyright</test_depend>
 	<test_depend>ament_flake8</test_depend>
