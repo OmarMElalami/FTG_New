@@ -16,10 +16,6 @@ setup(
             'share/' + package_name,
             ['package.xml']
         ),
-        (
-            os.path.join('share', package_name, 'launch'),
-            ['launch/start.launch.py']
-        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

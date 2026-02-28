@@ -1,58 +1,49 @@
-import paramiko
-import time
+import subprocess
+import signal
+import shutil
 
 
 def start_car_control():
     host = "192.168.0.100"
     user = "mxck"
-    password = "mxck" 
-    
-    client = paramiko.SSHClient()
-    # Load known host keys from the system (e.g. ~/.ssh/known_hosts).
-    # Add the car's key first with: ssh-keyscan 192.168.0.100 >> ~/.ssh/known_hosts
-    client.load_system_host_keys()
-    client.set_missing_host_key_policy(paramiko.RejectPolicy())
-    
+    password = "mxck"
+
+    remote_cmd = (
+        "cd ~/mxck2_ws && "
+        "echo mxck | sudo -S ./run_ros_docker.sh && "
+        "sleep 3 && "
+        "ros2 launch mxck_run mxck_run_launch.py "
+        "run_camera:=true run_lidar:=true run_foxglove:=true broadcast_tf:=true"
+    )
+
+    if shutil.which("sshpass"):
+        cmd = [
+            "sshpass", "-p", password,
+            "ssh", "-o", "StrictHostKeyChecking=no",
+            f"{user}@{host}",
+            remote_cmd,
+        ]
+    else:
+        cmd = [
+            "ssh", "-o", "StrictHostKeyChecking=no",
+            f"{user}@{host}",
+            remote_cmd,
+        ]
+
+    print(f"--- Connecting to {host} ---")
+    proc = None
     try:
-        print(f"--- Connecting to {host} ---")
-        client.connect(hostname=host, username=user, password=password, timeout=10)
-        print("✅ SSH Connection Successful!")
-
-        shell = client.invoke_shell(term='xterm', width=80, height=24)
-        time.sleep(1)
-
-        print("--- Starting Docker ---")
-        shell.send("cd ~/mxck2_ws\n")
-        shell.send("./run_ros_docker.sh\n")
-        time.sleep(1)
-        shell.send(password + "\n")
-        time.sleep(3) 
-
-        print("🚀 Launching System (Lidar, Camera, Foxglove)...")
-        cmd = "ros2 launch mxck_run mxck_run_launch.py run_camera:=true run_lidar:=true run_foxglove:=true broadcast_tf:=true\n"
-        shell.send(cmd)
-        
+        proc = subprocess.Popen(cmd)
         print("\n--- SYSTEM IS RUNNING ---")
         print("Press Ctrl+C in this terminal to STOP the car and exit.")
-
-        try:
-            while True:
-                if shell.recv_ready():
-                    output = shell.recv(1024).decode('utf-8', errors='ignore')
-                    print(output, end="")
-                time.sleep(0.1)
-        except KeyboardInterrupt:
-            print("\n\n🛑 Stopping the car... Sending Control+C to remote system.")
-            shell.send(chr(3)) 
-            time.sleep(3) 
-            
-    except Exception as e:
-        print(f"❌ Error: {e}")
+        proc.wait()
+    except KeyboardInterrupt:
+        print("\n\n🛑 Stopping the car...")
     finally:
-        if 'shell' in locals():
-            shell.close()
-        client.close()
+        if proc is not None and proc.poll() is None:
+            proc.terminate()
         print("\nConnection closed safely.")
+
 
 def main():
     start_car_control()
