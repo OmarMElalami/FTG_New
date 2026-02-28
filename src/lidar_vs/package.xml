@@ -3,20 +3,11 @@
 <package format="3">
   <name>lidar_vs</name>   
   <version>0.0.0</version>
-  <description>LiDAR Visualisierung</description>
-  <maintainer email="root@todo.todo">root</maintainer>
+  <description>Starts the LiDAR on the car via SSH and provides the combined launch file</description>
+  <maintainer email="omar@todo.todo">Omar Elalami</maintainer>
   <license>Apache License 2.0</license>
 
-
-
   <exec_depend>rclpy</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
-  <exec_depend>sensor_msgs</exec_depend>
-  
-  <exec_depend>ackermann_msgs</exec_depend>
-  <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>nav_msgs</exec_depend>
-  <exec_depend>tf2_ros</exec_depend>
 
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>

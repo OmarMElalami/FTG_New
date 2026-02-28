@@ -19,9 +19,9 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Jaroslav Klapálek',
-    maintainer_email='klapajar@fel.cvut.cz',
-    description='TODO',
+    maintainer='Omar Elalami',
+    maintainer_email='omar@todo.todo',
+    description='Converts LiDAR scan data to circle obstacles for the Follow-The-Gap planner',
     license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={
