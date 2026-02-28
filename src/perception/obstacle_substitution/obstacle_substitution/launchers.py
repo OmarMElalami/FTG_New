@@ -3,6 +3,7 @@
 #       for more info (section [Launch files are not symlinked])
 import launch
 import launch.actions
+import launch.conditions
 import launch.substitutions
 import launch_ros.actions
 
